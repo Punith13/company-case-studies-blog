@@ -1,10 +1,10 @@
-# Company Lab — Daily company case studies
+# Company Lab — Understand the business behind the stock
 
-A searchable static site built with **Astro 7**, Markdown and Vercel, modelled after the companion [Go Journey](https://github.com/Punith13/go-learning-blog).
+A searchable, readable **company research publication** built with Astro 7, Markdown and Vercel, using the same stack as [Go Journey](https://github.com/Punith13/go-learning-blog).
 
-**Included studies:** Costco, Coca-Cola, BHP and Amazon. Every post explores the income statement, balance sheet and cash flow statement, and ends with a synthesis question.
+The first four **fully worked** stories cover Costco, Coca-Cola, BHP and Amazon. Each article tells how the business earns money, walks through actual income statement, balance sheet and cash flow numbers, explains the calculations, and ends with a business takeaway. **No assignments or missing-number worksheets.**
 
-## Run locally
+## Develop locally
 
 Requires Node.js 22.23.4+.
 
@@ -14,19 +14,18 @@ npm run dev
 npm run build
 ~~~
 
-The homepage is at `/`, search/filter archive at `/studies/`, and individual case studies at `/studies/day-001-costco/` etc.
+Pages: / (home), /studies/ (searchable archive), /studies/day-001-costco/ and so on.
 
-## Publish a new case study
+## Add a company story
 
-Create `src/content/studies/day-NNN-slug.md`. Use frontmatter matching the existing files, giving each new study a unique `studyNumber`, valid official filing links and the correct study date. The index, article routes, previous/next navigation and RSS feed are generated automatically.
+Create src/content/studies/day-NNN-company.md with unique studyNumber and valid frontmatter matching an existing article. Select the next company for learning value and variation. Follow [AGENTS.md](AGENTS.md): source figures from current official filings, state reporting periods, show **worked** calculations and insights, and write a self-contained narrative suitable for reading end-to-end.
 
-Follow the editorial requirements in [AGENTS.md](AGENTS.md).
+The archive, site index, neighbouring stories and RSS feed update on a successful build.
 
-## Deploy on Vercel
+## Deploy
 
-Import `Punith13/company-case-studies-blog` using the Astro preset. Use `npm run build` and output directory `dist`. Set `PUBLIC_SITE_URL` to the canonical Vercel/custom-domain URL when known. Merges to `main` can trigger deployment.
+Import Punith13/company-case-studies-blog into Vercel with Astro, build command npm run build and output directory dist. Set PUBLIC_SITE_URL to the real production URL when known. Commits on main trigger deployments when GitHub is connected to Vercel.
 
-The GitHub Actions `site-check.yml` workflow validates builds on pull requests. It does **not** create articles or invoke AI automatically. The ChatGPT scheduled company studies and website publishing are currently separate; automated publication will require an authenticated writing agent, source verification, duplicate controls and review/approval policy.
+The repo contains build-check automation, **not a scheduled AI content publisher**. Daily ChatGPT studies and GitHub publishing are currently separate workflows. A publishing agent needs authenticated GitHub access, source verification and safety checks.
 
-For educational use only — not personalised investment advice.
-
+For education only; not personalised investment advice.
