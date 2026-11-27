@@ -1,0 +1,27 @@
+---
+import '../styles/global.css';
+const { title='Company Lab', description='Understand how companies actually make money, what they own and where cash goes.' }=Astro.props;
+const canonical=new URL(Astro.url.pathname,Astro.site);
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="theme-color" content="#10243a"/>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+<link rel="canonical" href={canonical}/>
+<link rel="alternate" type="application/rss+xml" href="/rss.xml" title="Company Lab"/>
+<title>{title}</title><meta name="description" content={description}/>
+<meta property="og:title" content={title}/><meta property="og:description" content={description}/>
+</head>
+<body>
+<header class="site-header"><nav class="wrap nav">
+  <a class="brand" href="/"><span class="mark">CL<span>.</span></span> Company <b>Lab</b></a>
+  <div class="links"><a href="/">Home</a><a href="/studies/">Case studies</a>
+  <a href="https://github.com/Punith13/company-case-studies-blog" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
+</nav></header>
+<slot/>
+<footer><div class="wrap foot"><div><b>Company Lab</b><p>Learn the business. Read the statements. Form your own view.</p></div><div><a href="/studies/">Case studies</a> · <a href="/rss.xml">RSS</a></div></div>
+<div class="wrap disclaimer">Educational material only. Not personalised financial advice. Verify filings and figures at the time of study.</div></footer>
+</body></html>
+

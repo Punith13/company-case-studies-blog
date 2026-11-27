@@ -1,0 +1,8 @@
+{
+ "name":"company-case-studies-blog",
+ "private":true,
+ "type":"module",
+ "engines":{"node":">=22.23.4"},
+ "scripts":{"dev":"astro dev","build":"astro build","preview":"astro preview"},
+ "dependencies":{"astro":"^7.4.13","@astrojs/rss":"^4.0.19","@astrojs/sitemap":"^3.7.6","sharp":"^0.35.0"}
+}

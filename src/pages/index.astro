@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import Shell from '../components/Shell.astro';
+const posts=(await getCollection('studies')).sort((a,b)=>b.data.studyNumber-a.data.studyNumber);
+const latest=posts[0];
+---
+<Shell title="Company Lab — Understand the business behind the stock">
+<main class="wrap">
+  <section class="hero">
+    <div><span class="eyebrow">ONE COMPANY AT A TIME · 20 MINUTES A DAY</span>
+    <h1>Look beyond the <em>stock price.</em> Understand the business.</h1>
+    <p>Read annual reports. Connect revenue, profit, assets, debt and actual cash flow. Explore different industries and learn to analyse any public company.</p>
+    <div class="buttons"><a class="button" href="/studies/">Explore case studies ↗</a>{latest&&<a class="button outline" href={'/studies/'+latest.id+'/'}>Latest: Case #{latest.data.studyNumber}</a>}</div>
+    </div>
+    <div class="framework"><span class="small">THE COMPANY ANALYSIS FRAMEWORK</span>
+      <div><b>01</b><span><strong>Income statement</strong><small>Where profits come from</small></span><i>↗</i></div>
+      <div><b>02</b><span><strong>Balance sheet</strong><small>What the business owns and owes</small></span><i>≡</i></div>
+      <div><b>03</b><span><strong>Cash flow</strong><small>Where cash actually goes</small></span><i>⇄</i></div>
+      <div><b>04</b><span><strong>Valuation</strong><small>What investors are paying for</small></span><i>◇</i></div>
+    </div>
+  </section>
+  <section class="metrics"><div><strong>{String(posts.length).padStart(2,'0')}</strong><span>Company studies</span></div><div><strong>15–25 min</strong><span>Per company</span></div><div><strong>03</strong><span>Core financial statements</span></div></section>
+  <section class="library"><span class="eyebrow">RESEARCH LIBRARY</span><h2>Companies worth understanding.</h2><p>Learn from profitable growers, mature firms, cyclical industries and complex cash-flow situations.</p>
+  <div class="grid">{posts.slice(0,6).map(post=><a class="card" href={'/studies/'+post.id+'/'}>
+    <span class="num">CASE #{String(post.data.studyNumber).padStart(2,'0')} · {post.data.exchange}:{post.data.ticker}</span><span class="pill">{post.data.caseType}</span><h3>{post.data.company}</h3><p>{post.data.description}</p><div class="footline"><span>{post.data.industry} · {post.data.timeMinutes} min</span><b>Open study ↗</b></div>
+  </a>)}</div></section>
+  <aside class="takeaway"><span class="eyebrow">THE CENTRAL LESSON</span><h2>A good business and a good stock are not always the same thing.</h2><p>Study the cash-generating engine of a company independently of its share price.</p></aside>
+</main>
+</Shell>
+<style>
+.hero{display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:55px;padding:76px 0}
+.hero h1{font-size:clamp(38px,5vw,65px);font-weight:850;margin:18px 0 20px}
+.hero em{color:var(--teal);font-style:normal}
+.hero p{color:var(--muted);font-size:16px;max-width:580px}
+.buttons{display:flex;gap:11px;flex-wrap:wrap;margin-top:24px}
+.framework{background:var(--navy);color:white;border-radius:18px;padding:27px;box-shadow:0 20px 55px #132c441c}
+.framework .small{display:block;font-size:10px;letter-spacing:.13em;color:#abc7d5;margin-bottom:18px;font-weight:800}
+.framework>div{display:flex;align-items:center;gap:18px;border-top:1px solid #ffffff24;padding:18px 0}
+.framework b{color:#67e5cb;font-size:12px}.framework span{display:flex;flex-direction:column;flex:1}.framework strong{font-size:14px}.framework small{font-size:11px;color:#b6c6d5}.framework i{color:#67e5cb;font-style:normal}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border);background:#fff;border-radius:15px;overflow:hidden}
+.metrics div{display:flex;flex-direction:column;padding:26px;border-right:1px solid var(--border)}.metrics div:last-child{border:0}.metrics strong{font-size:28px}.metrics span{font-size:12px;color:var(--muted)}
+.library{padding:72px 0}.library h2{font-size:35px;margin:12px 0}.library>p{color:var(--muted);font-size:14px;margin-bottom:24px}
+.takeaway{background:#e7f3ee;padding:34px;border-radius:16px;margin:0 0 80px}.takeaway h2{font-size:26px;margin:10px 0}.takeaway p{color:#546c70;margin:0}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding:45px 0;gap:28px}.framework{max-width:600px}}
+@media(max-width:520px){.metrics div{padding:16px 9px}.metrics strong{font-size:20px}.metrics span{font-size:10px}.library h2{font-size:28px}}
+</style>
+
