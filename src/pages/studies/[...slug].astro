@@ -18,12 +18,12 @@ const day=post.data.pubDate.toLocaleDateString('en-AU',{day:'numeric',month:'lon
 <a href="/studies/" class="back">← All case studies</a>
 <article>
 <header><p class="eyebrow">CASE #{String(post.data.studyNumber).padStart(2,'0')} · {post.data.exchange}:{post.data.ticker} · {day}</p>
-<h1>{post.data.company}</h1><p class="intro">{post.data.description}</p>
-<div class="badges"><span class="pill">{post.data.caseType}</span><span class="pill pale">{post.data.difficulty}</span><span>{post.data.timeMinutes} minute study</span></div></header>
-<aside class="question"><span class="eyebrow">TODAY'S BUSINESS QUESTION</span><p>{post.data.focus}</p></aside>
-<div class="reports"><strong>Open official reports</strong>
-<a href={post.data.annualReport} target="_blank" rel="noopener noreferrer">Annual filing ↗</a>
-{post.data.interimReport&&<a href={post.data.interimReport} target="_blank" rel="noopener noreferrer">Interim / operational update ↗</a>}</div>
+<h1>{post.data.title}</h1><p class="intro">{post.data.description}</p>
+<div class="badges"><span class="pill">{post.data.caseType}</span><span class="pill pale">{post.data.difficulty}</span><span>{post.data.timeMinutes} min read</span></div></header>
+<aside class="question"><span class="eyebrow">THE BIG IDEA</span><p>{post.data.focus}</p></aside>
+<div class="reports"><strong>Primary sources · optional reading</strong>
+<a href={post.data.annualReport} target="_blank" rel="noopener noreferrer">Annual report ↗</a>
+{post.data.interimReport&&<a href={post.data.interimReport} target="_blank" rel="noopener noreferrer">Latest update ↗</a>}</div>
 <div class="prose"><Content/></div>
 </article>
 <nav class="prevnext" aria-label="Previous and next case studies">
@@ -33,11 +33,11 @@ const day=post.data.pubDate.toLocaleDateString('en-AU',{day:'numeric',month:'lon
 </main>
 </Shell>
 <style>
-.article{max-width:800px;margin:0 auto;padding:40px 18px 96px}.back{font-size:13px;font-weight:800;text-decoration:none}
-header{padding:34px 0 29px;border-bottom:1px solid var(--border)}h1{font-size:clamp(38px,6vw,61px);margin:14px 0}
+.article{max-width:850px;margin:0 auto;padding:40px 22px 96px}.back{font-size:13px;font-weight:800;text-decoration:none}
+header{padding:34px 0 29px;border-bottom:1px solid var(--border)}h1{font-size:clamp(33px,5.8vw,52px);margin:14px 0;line-height:1.14;letter-spacing:-.045em}
 .intro{font-size:17px;color:var(--muted);max-width:700px}.badges{display:flex;gap:9px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--muted)}
 .pale{background:#e9edf2;color:#51627a}.question{background:var(--navy);color:white;border-radius:15px;padding:25px;margin:31px 0}
-.question .eyebrow{color:#65e3c7}.question p{font-size:20px;font-weight:680;line-height:1.5;margin:11px 0 0}
+.question .eyebrow{color:#65e3c7}.question p{font-size:19px;font-weight:680;line-height:1.6;margin:11px 0 0}
 .reports{border:1px solid var(--border);background:#fff;border-radius:12px;padding:18px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin:0 0 38px;font-size:12px}.reports strong{margin-right:auto}.reports a{font-weight:800;text-decoration:none}
 .prevnext{display:grid;grid-template-columns:1fr 1fr;gap:13px;border-top:1px solid var(--border);margin-top:42px;padding-top:26px}
 .prevnext a{display:flex;flex-direction:column;text-decoration:none;border:1px solid var(--border);background:white;border-radius:12px;padding:16px;gap:5px}

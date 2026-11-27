@@ -7,9 +7,9 @@ const latest=posts[0];
 <Shell title="Company Lab — Understand the business behind the stock">
 <main class="wrap">
   <section class="hero">
-    <div><span class="eyebrow">ONE COMPANY AT A TIME · 20 MINUTES A DAY</span>
+    <div><span class="eyebrow">ONE COMPANY AT A TIME · A COMPLETE STORY EVERY DAY</span>
     <h1>Look beyond the <em>stock price.</em> Understand the business.</h1>
-    <p>Read annual reports. Connect revenue, profit, assets, debt and actual cash flow. Explore different industries and learn to analyse any public company.</p>
+    <p>Read the complete story of how each business works—its customers, revenue, profits, assets and actual cash. Real numbers, worked explanations and conclusions, all in one place. No worksheets.</p>
     <div class="buttons"><a class="button" href="/studies/">Explore case studies ↗</a>{latest&&<a class="button outline" href={'/studies/'+latest.id+'/'}>Latest: Case #{latest.data.studyNumber}</a>}</div>
     </div>
     <div class="framework"><span class="small">THE COMPANY ANALYSIS FRAMEWORK</span>
@@ -19,8 +19,8 @@ const latest=posts[0];
       <div><b>04</b><span><strong>Valuation</strong><small>What investors are paying for</small></span><i>◇</i></div>
     </div>
   </section>
-  <section class="metrics"><div><strong>{String(posts.length).padStart(2,'0')}</strong><span>Company studies</span></div><div><strong>15–25 min</strong><span>Per company</span></div><div><strong>03</strong><span>Core financial statements</span></div></section>
-  <section class="library"><span class="eyebrow">RESEARCH LIBRARY</span><h2>Companies worth understanding.</h2><p>Learn from profitable growers, mature firms, cyclical industries and complex cash-flow situations.</p>
+  <section class="metrics"><div><strong>{String(posts.length).padStart(2,'0')}</strong><span>Company studies</span></div><div><strong>10–12 min</strong><span>Easy read</span></div><div><strong>03</strong><span>Core financial statements</span></div></section>
+  <section class="library"><span class="eyebrow">RESEARCH LIBRARY</span><h2>Companies worth understanding.</h2><p>Plain-English case studies with real financial data, the calculations already done and clear takeaways.</p>
   <div class="grid">{posts.slice(0,6).map(post=><a class="card" href={'/studies/'+post.id+'/'}>
     <span class="num">CASE #{String(post.data.studyNumber).padStart(2,'0')} · {post.data.exchange}:{post.data.ticker}</span><span class="pill">{post.data.caseType}</span><h3>{post.data.company}</h3><p>{post.data.description}</p><div class="footline"><span>{post.data.industry} · {post.data.timeMinutes} min</span><b>Open study ↗</b></div>
   </a>)}</div></section>
