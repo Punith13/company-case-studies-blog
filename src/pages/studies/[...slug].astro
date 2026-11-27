@@ -1,0 +1,47 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Shell from '../../components/Shell.astro';
+export async function getStaticPaths(){
+ const posts=await getCollection('studies');
+ return posts.map(post=>({params:{slug:post.id},props:{post}}));
+}
+interface Props{post:CollectionEntry<'studies'>}
+const {post}=Astro.props;
+const posts=(await getCollection('studies')).sort((a,b)=>a.data.studyNumber-b.data.studyNumber);
+const index=posts.findIndex(p=>p.id===post.id);
+const previous=posts[index-1];const next=posts[index+1];
+const {Content}=await render(post);
+const day=post.data.pubDate.toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'});
+---
+<Shell title={post.data.company+' — Company Lab'} description={post.data.description}>
+<main class="article">
+<a href="/studies/" class="back">← All case studies</a>
+<article>
+<header><p class="eyebrow">CASE #{String(post.data.studyNumber).padStart(2,'0')} · {post.data.exchange}:{post.data.ticker} · {day}</p>
+<h1>{post.data.company}</h1><p class="intro">{post.data.description}</p>
+<div class="badges"><span class="pill">{post.data.caseType}</span><span class="pill pale">{post.data.difficulty}</span><span>{post.data.timeMinutes} minute study</span></div></header>
+<aside class="question"><span class="eyebrow">TODAY'S BUSINESS QUESTION</span><p>{post.data.focus}</p></aside>
+<div class="reports"><strong>Open official reports</strong>
+<a href={post.data.annualReport} target="_blank" rel="noopener noreferrer">Annual filing ↗</a>
+{post.data.interimReport&&<a href={post.data.interimReport} target="_blank" rel="noopener noreferrer">Interim / operational update ↗</a>}</div>
+<div class="prose"><Content/></div>
+</article>
+<nav class="prevnext" aria-label="Previous and next case studies">
+{previous?<a href={'/studies/'+previous.id+'/'}><small>← Previous</small><b>{previous.data.company}</b></a>:<span></span>}
+{next?<a href={'/studies/'+next.id+'/'}><small>Next →</small><b>{next.data.company}</b></a>:<span></span>}
+</nav>
+</main>
+</Shell>
+<style>
+.article{max-width:800px;margin:0 auto;padding:40px 18px 96px}.back{font-size:13px;font-weight:800;text-decoration:none}
+header{padding:34px 0 29px;border-bottom:1px solid var(--border)}h1{font-size:clamp(38px,6vw,61px);margin:14px 0}
+.intro{font-size:17px;color:var(--muted);max-width:700px}.badges{display:flex;gap:9px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--muted)}
+.pale{background:#e9edf2;color:#51627a}.question{background:var(--navy);color:white;border-radius:15px;padding:25px;margin:31px 0}
+.question .eyebrow{color:#65e3c7}.question p{font-size:20px;font-weight:680;line-height:1.5;margin:11px 0 0}
+.reports{border:1px solid var(--border);background:#fff;border-radius:12px;padding:18px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin:0 0 38px;font-size:12px}.reports strong{margin-right:auto}.reports a{font-weight:800;text-decoration:none}
+.prevnext{display:grid;grid-template-columns:1fr 1fr;gap:13px;border-top:1px solid var(--border);margin-top:42px;padding-top:26px}
+.prevnext a{display:flex;flex-direction:column;text-decoration:none;border:1px solid var(--border);background:white;border-radius:12px;padding:16px;gap:5px}
+.prevnext small{color:var(--teal);font-weight:800}.prevnext b{color:var(--navy);font-size:14px}
+@media(max-width:580px){.prevnext{grid-template-columns:1fr}}
+</style>
+

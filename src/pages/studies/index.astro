@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import Shell from '../../components/Shell.astro';
+const posts=(await getCollection('studies')).sort((a,b)=>b.data.studyNumber-a.data.studyNumber);
+const industries=[...new Set(posts.map(p=>p.data.industry))].sort();
+---
+<Shell title="All company studies | Company Lab">
+<main class="wrap archive">
+  <a class="back" href="/">← Home</a><span class="eyebrow">YOUR RESEARCH NOTEBOOK</span>
+  <h1>All company studies</h1><p class="summary">Browse businesses, industries and financial concepts. Every study includes real filings and exercises for all three financial statements.</p>
+  <div class="filters">
+    <label class="sr-only" for="q">Search case studies</label>
+    <input id="q" type="search" placeholder="Search company, ticker or concept…"/>
+    <label class="sr-only" for="industry">Filter by industry</label>
+    <select id="industry"><option value="">All industries</option>{industries.map(s=><option value={s}>{s}</option>)}</select>
+  </div>
+  <p id="count" class="count">{posts.length} studies</p>
+  <div class="grid">{posts.map(post=><a class="card" data-case data-industry={post.data.industry} data-search={(post.data.company+' '+post.data.ticker+' '+post.data.exchange+' '+post.data.industry+' '+post.data.focus+' '+post.data.caseType+' '+post.data.tags.join(' ')).toLowerCase()} href={'/studies/'+post.id+'/'}>
+    <span class="num">CASE #{String(post.data.studyNumber).padStart(2,'0')} · {post.data.exchange}:{post.data.ticker}</span>
+    <span class="pill">{post.data.caseType}</span><h3>{post.data.company}</h3><p>{post.data.description}</p>
+    <div class="footline"><span>{post.data.difficulty} · {post.data.timeMinutes} min</span><b>Read ↗</b></div>
+  </a>)}</div>
+  <p id="empty" hidden>No studies match. Try different search terms.</p>
+</main>
+<script>
+const q=document.querySelector('#q');
+const industry=document.querySelector('#industry');
+const cards=Array.from(document.querySelectorAll('[data-case]'));
+function filter(){
+ let found=0;
+ for(const card of cards){
+  const matches=card.dataset.search.includes(q.value.trim().toLowerCase()) && (!industry.value || card.dataset.industry===industry.value);
+  card.hidden=!matches;
+  if(matches)found++;
+ }
+ document.querySelector('#count').textContent=found+' '+(found===1?'study':'studies');
+ document.querySelector('#empty').hidden=found!==0;
+}
+q?.addEventListener('input',filter);
+industry?.addEventListener('change',filter);
+</script>
+</Shell>
+<style>
+.archive{min-height:78vh;padding:48px 0 100px}.back{display:block;text-decoration:none;font-weight:800;font-size:12px;margin-bottom:36px}
+h1{font-size:clamp(35px,5vw,57px);margin:9px 0 15px}.summary{max-width:690px;font-size:15px;color:var(--muted)}
+.filters{display:flex;gap:11px;margin:34px 0 14px}.filters input,.filters select{background:#fff;border:1px solid #cbd8e6;border-radius:10px;color:var(--navy);padding:13px 15px;font:inherit;font-size:13px}
+.filters input{flex:1;min-width:0}.filters select{width:240px}.count{color:var(--muted);font-size:12px;font-weight:800}
+.card[hidden],#empty[hidden]{display:none}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+@media(max-width:620px){.filters{flex-direction:column}.filters select{width:100%}}
+</style>
+
